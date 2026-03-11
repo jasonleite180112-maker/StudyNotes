@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Royal Smart Notes + Workout Planner</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="logo">
+                <h1>👑 Royal App</h1>
+            </div>
+            <nav class="nav-menu">
+                <button class="nav-item active" data-page="dashboard">
+                    <span class="icon">📊</span>
+                    <span>Dashboard</span>
+                </button>
+                <button class="nav-item" data-page="notes">
+                    <span class="icon">📝</span>
+                    <span>Notes</span>
+                </button>
+                <button class="nav-item" data-page="documents">
+                    <span class="icon">📄</span>
+                    <span>Documents</span>
+                </button>
+                <button class="nav-item" data-page="calendar">
+                    <span class="icon">📅</span>
+                    <span>Calendar</span>
+                </button>
+                <button class="nav-item" data-page="workout">
+                    <span class="icon">💪</span>
+                    <span>Workout Planner</span>
+                </button>
+                <button class="nav-item" data-page="archive">
+                    <span class="icon">🗄️</span>
+                    <span>Archive</span>
+                </button>
+            </nav>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Dashboard Page -->
+            <div class="page active" id="dashboard">
+                <div class="page-header">
+                    <h2>Dashboard</h2>
+                    <p class="subtitle">Your productivity overview</p>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">📝</div>
+                        <div class="stat-info">
+                            <h3 id="stat-total-notes">0</h3>
+                            <p>Total Notes</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">✅</div>
+                        <div class="stat-info">
+                            <h3 id="stat-completed">0</h3>
+                            <p>Completed Tasks</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">⏰</div>
+                        <div class="stat-info">
+                            <h3 id="stat-upcoming">0</h3>
+                            <p>Upcoming Tasks</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">💪</div>
+                        <div class="stat-info">
+                            <h3 id="stat-workout-days">0</h3>
+                            <p>Workout Days This Week</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="activity-section">
+                    <h3>Recent Activity</h3>
+                    <div id="recent-activity" class="activity-list">
+                        <p class="empty-state">No recent activity</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Notes Page -->
+            <div class="page" id="notes">
+                <div class="page-header">
+                    <h2>Notes</h2>
+                    <div class="header-actions">
+                        <input type="text" id="search-notes" placeholder="Search notes..." class="search-input">
+                        <button class="btn-primary" id="create-note-btn">+ Create Note</button>
+                    </div>
+                </div>
+
+                <div class="color-filters">
+                    <button class="filter-btn active" data-color="all">All</button>
+                    <button class="filter-btn" data-color="yellow">✅ Completed</button>
+                    <button class="filter-btn" data-color="green">🟢 In Progress</button>
+                    <button class="filter-btn" data-color="white">⚪ Not Started</button>
+                    <button class="filter-btn" data-color="red">🔴 Hard/Urgent</button>
+                    <button class="filter-btn" data-color="brown">🟤 Easy</button>
+                </div>
+
+                <div id="notes-grid" class="notes-grid">
+                    <!-- Notes will be dynamically added here -->
+                </div>
+            </div>
+
+            <!-- Documents Page -->
+            <div class="page" id="documents">
+                <div class="page-header">
+                    <h2>Documents</h2>
+                    <button class="btn-primary" id="create-doc-btn">+ Create Document</button>
+                </div>
+
+                <div id="documents-list" class="documents-list">
+                    <!-- Documents list will be shown here -->
+                </div>
+
+                <div id="document-editor" class="document-editor" style="display: none;">
+                    <div class="editor-header">
+                        <input type="text" id="doc-title" class="doc-title-input" placeholder="Untitled Document">
+                        <div class="editor-actions">
+                            <button class="btn-secondary" id="close-editor-btn">Close</button>
+                        </div>
+                    </div>
+
+                    <div class="editor-toolbar">
+                        <button class="toolbar-btn" data-command="bold" title="Bold"><b>B</b></button>
+                        <button class="toolbar-btn" data-command="italic" title="Italic"><i>I</i></button>
+                        <button class="toolbar-btn" data-command="underline" title="Underline"><u>U</u></button>
+                        <span class="toolbar-divider"></span>
+                        <button class="toolbar-btn" data-command="formatBlock" data-value="h1" title="Heading 1">H1</button>
+                        <button class="toolbar-btn" data-command="formatBlock" data-value="h2" title="Heading 2">H2</button>
+                        <button class="toolbar-btn" data-command="formatBlock" data-value="p" title="Paragraph">P</button>
+                        <span class="toolbar-divider"></span>
+                        <button class="toolbar-btn" data-command="insertUnorderedList" title="Bullet List">• List</button>
+                        <button class="toolbar-btn" data-command="insertOrderedList" title="Numbered List">1. List</button>
+                    </div>
+
+                    <div id="editor-content" class="editor-content" contenteditable="true">
+                        <p>Start writing...</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Calendar Page -->
+            <div class="page" id="calendar">
+                <div class="page-header">
+                    <h2>Calendar</h2>
+                </div>
+
+                <div class="calendar-header">
+                    <button class="calendar-nav" id="prev-month">❮</button>
+                    <h3 id="calendar-title">March 2026</h3>
+                    <button class="calendar-nav" id="next-month">❯</button>
+                </div>
+
+                <div id="calendar-view" class="calendar-container">
+                    <!-- Calendar will be rendered here -->
+                </div>
+            </div>
+
+            <!-- Workout Planner Page -->
+            <div class="page" id="workout">
+                <div class="page-header">
+                    <h2>Workout Planner</h2>
+                    <p class="subtitle">Plan your weekly workouts</p>
+                </div>
+
+                <div class="workout-planner">
+                    <div class="workout-days">
+                        <div class="workout-day-card" data-day="monday">
+                            <h3>Monday</h3>
+                            <div class="workout-content" id="workout-monday">
+                                <button class="btn-add-workout" data-day="monday">+ Add Workout</button>
+                            </div>
+                        </div>
+                        <div class="workout-day-card" data-day="tuesday">
+                            <h3>Tuesday</h3>
+                            <div class="workout-content" id="workout-tuesday">
+                                <button class="btn-add-workout" data-day="tuesday">+ Add Workout</button>
+                            </div>
+                        </div>
+                        <div class="workout-day-card" data-day="wednesday">
+                            <h3>Wednesday</h3>
+                            <div class="workout-content" id="workout-wednesday">
+                                <button class="btn-add-workout" data-day="wednesday">+ Add Workout</button>
+                            </div>
+                        </div>
+                        <div class="workout-day-card" data-day="thursday">
+                            <h3>Thursday</h3>
+                            <div class="workout-content" id="workout-thursday">
+                                <button class="btn-add-workout" data-day="thursday">+ Add Workout</button>
+                            </div>
+                        </div>
+                        <div class="workout-day-card" data-day="friday">
+                            <h3>Friday</h3>
+                            <div class="workout-content" id="workout-friday">
+                                <button class="btn-add-workout" data-day="friday">+ Add Workout</button>
+                            </div>
+                        </div>
+                        <div class="workout-day-card" data-day="saturday">
+                            <h3>Saturday</h3>
+                            <div class="workout-content" id="workout-saturday">
+                                <button class="btn-add-workout" data-day="saturday">+ Add Workout</button>
+                            </div>
+                        </div>
+                        <div class="workout-day-card" data-day="sunday">
+                            <h3>Sunday</h3>
+                            <div class="workout-content" id="workout-sunday">
+                                <button class="btn-add-workout" data-day="sunday">+ Add Workout</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Archive Page -->
+            <div class="page" id="archive">
+                <div class="page-header">
+                    <h2>Archive</h2>
+                    <p class="subtitle">Completed and archived tasks</p>
+                </div>
+
+                <div id="archive-grid" class="notes-grid">
+                    <!-- Archived notes will be shown here -->
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Note Modal -->
+    <div id="note-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modal-title">Create Note</h3>
+                <button class="close-btn" id="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Title</label>
+                    <input type="text" id="note-title" class="form-input" placeholder="Enter note title">
+                </div>
+
+                <div class="form-group">
+                    <label>Content</label>
+                    <textarea id="note-content" class="form-textarea" placeholder="Enter note content" rows="6"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Due Date</label>
+                    <input type="date" id="note-due-date" class="form-input">
+                </div>
+
+                <div class="form-group">
+                    <label>Status Color</label>
+                    <div class="color-options">
+                        <button class="color-option white active" data-color="white" title="Not Started">⚪</button>
+                        <button class="color-option green" data-color="green" title="In Progress">🟢</button>
+                        <button class="color-option yellow" data-color="yellow" title="Completed">✅</button>
+                        <button class="color-option red" data-color="red" title="Hard/Urgent">🔴</button>
+                        <button class="color-option brown" data-color="brown" title="Easy">🟤</button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" id="cancel-note-btn">Cancel</button>
+                <button class="btn-primary" id="save-note-btn">Save Note</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Workout Modal -->
+    <div id="workout-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="workout-modal-title">Add Workout</h3>
+                <button class="close-btn" id="close-workout-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Muscle Group</label>
+                    <select id="workout-muscle-group" class="form-input">
+                        <option value="">Select muscle group...</option>
+                        <option value="arms">Arms</option>
+                        <option value="legs">Legs</option>
+                        <option value="chest">Chest</option>
+                        <option value="back">Back</option>
+                        <option value="shoulders">Shoulders</option>
+                        <option value="core">Core</option>
+                        <option value="rest">Rest Day</option>
+                    </select>
+                </div>
+
+                <div class="form-group" id="exercise-type-group">
+                    <label>Exercise</label>
+                    <select id="workout-exercise" class="form-input">
+                        <option value="">Select exercise...</option>
+                    </select>
+                </div>
+
+                <div class="form-group" id="max-reps-group">
+                    <label>Maximum Reps You Can Do</label>
+                    <input type="number" id="workout-max-reps" class="form-input" min="1" placeholder="e.g., 20">
+                </div>
+
+                <div id="workout-recommendation" class="workout-recommendation"></div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" id="cancel-workout-btn">Cancel</button>
+                <button class="btn-primary" id="save-workout-btn">Save Workout</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="app.js"></script>
+    <script src="calendar.js"></script>
+    <script src="documents.js"></script>
+    <script src="workout.js"></script>
+</body>
+</html>
